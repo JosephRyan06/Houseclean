@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="250dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:contentPadding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvReqServiceType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Bathroom Cleaning"
+            android:textColor="#017497"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/profileIconContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvReqDateTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="March 16, 2026, 9:00 PM"
+            android:textColor="#888888"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/profileIconContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvReqServiceType" />
+
+        <TextView
+            android:id="@+id/labelReqStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Status: "
+            android:textColor="#424242"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvReqDateTime" />
+
+        <TextView
+            android:id="@+id/tvReqStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="PENDING | NONE"
+            android:textColor="#FF9800"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelReqStatus"
+            app:layout_constraintEnd_toStartOf="@+id/profileIconContainer"
+            app:layout_constraintStart_toEndOf="@id/labelReqStatus" />
+
+        <TextView
+            android:id="@+id/labelHouseholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Householder: "
+            android:textColor="#424242"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelReqStatus" />
+
+        <TextView
+            android:id="@+id/tvReqHouseholderName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Last Name, First Name"
+            android:textColor="#424242"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/profileIconContainer"
+            app:layout_constraintStart_toEndOf="@id/labelHouseholder"
+            app:layout_constraintTop_toTopOf="@id/labelHouseholder" />
+
+        <TextView
+            android:id="@+id/labelSalary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Salary: "
+            android:textColor="#424242"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvReqHouseholderName" />
+
+        <TextView
+            android:id="@+id/tvReqSalary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="PHP 500"
+            android:textColor="#424242"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelSalary"
+            app:layout_constraintEnd_toStartOf="@+id/profileIconContainer"
+            app:layout_constraintStart_toEndOf="@id/labelSalary" />
+
+        <FrameLayout
+            android:id="@+id/profileIconContainer"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/profileBg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/profile_icon_bg" />
+
+            <TextView
+                android:id="@+id/tvProfileInitials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="LF"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/viewStatusStroke"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/profile_status_stroke" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDecline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gradient_blue"
+                android:text="Decline"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="@null"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnConfirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gradient_blue"
+                android:text="Accept"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="@null"
+                app:cornerRadius="8dp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

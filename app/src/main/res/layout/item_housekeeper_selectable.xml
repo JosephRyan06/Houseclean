@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="#F8F9FA"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <FrameLayout
+            android:layout_width="64dp"
+            android:layout_height="64dp">
+            <View
+                android:id="@+id/vProfileBg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/profile_icon_bg" />
+            <TextView
+                android:id="@+id/tvProfileInitial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="M" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvSelectableHKName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="mac caballero"
+            android:textColor="#002147"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvSelectableHKContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Contact: 09179852170"
+            android:textColor="#5E6D82"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvSelectableHKExperience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="5 yrs experience"
+            android:textColor="#5E6D82"
+            android:textSize="12sp" />
+
+        <RatingBar
+            android:id="@+id/rbSelectableHK"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:progressTint="#FFD700"
+            android:rating="0"/>
+
+        <TextView
+            android:id="@+id/tvSelectableHKRatings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="No ratings yet"
+            android:textColor="#5E6D82"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btnProfileDetails"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:text="Check Profile"
+            android:textAllCaps="false"
+            android:textColor="#017497"
+            android:textSize="14sp"
+            app:strokeColor="#017497"
+            app:cornerRadius="24dp"/>
+
+        <LinearLayout
+            android:id="@+id/layoutAvailabilityStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <View
+                android:id="@+id/vAvailabilityDot"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/register_progress_line"
+                android:backgroundTint="#2DCC91" />
+            <TextView
+                android:id="@+id/tvAvailabilityStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Available for your slot"
+                android:textColor="#2DCC91"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

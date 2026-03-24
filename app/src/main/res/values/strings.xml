@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Houseclean</string>
+
+    <string-array name="barangay_list">
+        <item>Amado</item>
+        <item>Balogo</item>
+        <item>Binloc</item>
+        <item>Bolosan</item>
+        <item>Bonuan Boquig</item>
+        <item>Bonuan Gueset</item>
+        <item>Bonuan Blue Beach</item>
+        <item>Calmay</item>
+        <item>Carael</item>
+        <item>Caranglaan</item>
+        <item>Cebol</item>
+        <item>Herrero</item>
+        <item>Lasip Chico</item>
+        <item>Lasip Grande</item>
+        <item>Lucao</item>
+        <item>Malued</item>
+        <item>Mamalingling</item>
+        <item>Mangin</item>
+        <item>Mayombo</item>
+        <item>Pantal</item>
+        <item>Pogo Chico</item>
+        <item>Pogo Grande</item>
+        <item>Pugaro Suit</item>
+        <item>Salisay</item>
+        <item>Salapingao</item>
+        <item>Tebeng</item>
+        <item>Barangay I (T. Bugallon)</item>
+        <item>Barangay II (New Quebec)</item>
+        <item>Barangay III (Commercial District)</item>
+        <item>Barangay IV (Commercial District)</item>
+        <item>Barangay V (Commercial District)</item>
+    </string-array>
+
+</resources>

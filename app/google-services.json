@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "955467151500",
+    "project_id": "houseclean-20ce9",
+    "storage_bucket": "houseclean-20ce9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955467151500:android:b3506fbf6bfe1c6ce723a9",
+        "android_client_info": {
+          "package_name": "com.example.houseclean"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKBTkFyFAeHmQYwgb8-BoGR2iZOVXbaVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

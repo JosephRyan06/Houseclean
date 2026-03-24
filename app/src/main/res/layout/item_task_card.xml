@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/card_border_green"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvTaskDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MONDAY, 7:00 AM - 12:00 PM"
+        android:textColor="#2DCC91"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTaskDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="January 1, 2026"
+        android:textColor="#757575"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTaskDateTime" />
+
+    <TextView
+        android:id="@+id/labelTaskService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Service: "
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTaskDate" />
+
+    <TextView
+        android:id="@+id/tvTaskService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bathroom Cleaning"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@id/labelTaskService"
+        app:layout_constraintTop_toTopOf="@id/labelTaskService" />
+
+    <TextView
+        android:id="@+id/labelTaskHouseholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Householder: "
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelTaskService" />
+
+    <TextView
+        android:id="@+id/tvTaskHouseholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dela Cruz, Juan"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@id/labelTaskHouseholder"
+        app:layout_constraintTop_toTopOf="@id/labelTaskHouseholder" />
+
+    <TextView
+        android:id="@+id/labelTaskPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment: "
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelTaskHouseholder" />
+
+    <TextView
+        android:id="@+id/tvTaskPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PHP 500"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@id/labelTaskPayment"
+        app:layout_constraintTop_toTopOf="@id/labelTaskPayment" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnViewTaskDetails"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#0B5036"
+        android:text="VIEW DETAILS"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:cornerRadius="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTaskPayment" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

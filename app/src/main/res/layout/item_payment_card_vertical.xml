@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/card_border_green"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PHP 500"
+        android:textColor="#2DCC91"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/labelStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status: "
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAmount" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PENDING"
+        android:textColor="#FBC02D"
+        android:textStyle="italic"
+        app:layout_constraintStart_toEndOf="@id/labelStatus"
+        app:layout_constraintTop_toTopOf="@id/labelStatus" />
+
+    <TextView
+        android:id="@+id/labelTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Time/Schedule: "
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelStatus" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="January 1, 2026"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@id/labelTime"
+        app:layout_constraintTop_toTopOf="@id/labelTime" />
+
+    <TextView
+        android:id="@+id/labelServicePay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Service: "
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTime" />
+
+    <TextView
+        android:id="@+id/tvServicePay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bathroom Cleaning"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@id/labelServicePay"
+        app:layout_constraintTop_toTopOf="@id/labelServicePay" />
+
+    <TextView
+        android:id="@+id/labelHousekeeperPay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Housekeeper: "
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelServicePay" />
+
+    <TextView
+        android:id="@+id/tvHousekeeperPay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Afton, Michael"
+        android:textColor="#000000"
+        app:layout_constraintStart_toEndOf="@id/labelHousekeeperPay"
+        app:layout_constraintTop_toTopOf="@id/labelHousekeeperPay" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnViewDetailsPay"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#0B5036"
+        android:text="VIEW DETAILS"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        app:cornerRadius="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHousekeeperPay" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

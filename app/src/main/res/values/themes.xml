@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Houseclean" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">#3FBFF5</item>
+        <item name="colorControlActivated">#3FBFF5</item>
+        <item name="colorControlHighlight">#3FBFF5</item>
+    </style>
+
+    <style name="Theme.Houseclean" parent="Base.Theme.Houseclean" />
+</resources>

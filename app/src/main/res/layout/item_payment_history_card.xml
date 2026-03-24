@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:contentPadding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvPaymentPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PHP 500"
+            android:textColor="#017497"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/labelStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: "
+            android:textColor="#424242"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPaymentPrice" />
+
+        <TextView
+            android:id="@+id/tvPaymentStatusValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PAID"
+            android:textColor="#2DCC91"
+            android:textSize="14sp"
+            android:textStyle="italic|bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelStatus"
+            app:layout_constraintStart_toEndOf="@id/labelStatus" />
+
+        <TextView
+            android:id="@+id/labelSchedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Schedule: "
+            android:textColor="#424242"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelStatus" />
+
+        <TextView
+            android:id="@+id/tvPaymentSchedule"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="January 1, 2026"
+            android:textColor="#424242"
+            android:textSize="13sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelSchedule"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelSchedule" />
+
+        <TextView
+            android:id="@+id/labelDayTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Day/Time: "
+            android:textColor="#424242"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelSchedule" />
+
+        <TextView
+            android:id="@+id/tvPaymentDayTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Morning, 9:00 PM"
+            android:textColor="#424242"
+            android:textSize="13sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelDayTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelDayTime" />
+
+        <TextView
+            android:id="@+id/labelService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Service: "
+            android:textColor="#424242"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelDayTime" />
+
+        <TextView
+            android:id="@+id/tvPaymentService"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Bathroom Cleaning"
+            android:textColor="#424242"
+            android:textSize="13sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelService"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelService" />
+
+        <TextView
+            android:id="@+id/labelHousekeeper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Housekeeper: "
+            android:textColor="#424242"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelService" />
+
+        <TextView
+            android:id="@+id/tvPaymentHousekeeper"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Afton, Michael"
+            android:textColor="#424242"
+            android:textSize="13sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelHousekeeper"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelHousekeeper" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="end"
+            app:layout_constraintTop_toBottomOf="@id/tvPaymentHousekeeper"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPayNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/btn_gradient_blue"
+                android:text="Pay"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:backgroundTint="@null"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewPaymentDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_gradient_blue"
+                android:paddingHorizontal="24dp"
+                android:text="View Details"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="@null"
+                app:cornerRadius="8dp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
