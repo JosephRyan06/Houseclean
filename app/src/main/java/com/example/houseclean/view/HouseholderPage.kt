@@ -82,7 +82,7 @@ class HouseholderPage : AppCompatActivity() {
                     val randomColor = Color.parseColor(colors[colorIndex])
                     (profileBg.background as? GradientDrawable)?.setColor(randomColor)
                     
-                    val strokeColor = if (it.isOnline) Color.parseColor("#0DFF00") else Color.parseColor("#888888")
+                    val strokeColor = if (it.status.equals("active", ignoreCase = true)) Color.parseColor("#2DCC91") else Color.parseColor("#888888")
                     (statusStroke.background as? GradientDrawable)?.setStroke(6, strokeColor)
                 }
             }

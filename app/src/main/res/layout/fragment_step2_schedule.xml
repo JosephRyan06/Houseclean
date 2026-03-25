@@ -140,7 +140,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -164,32 +165,55 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-                <EditText
-                    android:id="@+id/etStartDate"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutDate"
+                    style="@style/AppTextInputLayout"
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:focusable="false"
-                    android:gravity="center_vertical"
-                    android:hint="25/03/2026"
-                    android:paddingHorizontal="4dp"
-                    android:textColor="#002147"
-                    android:textSize="16sp" />
-                <EditText
-                    android:id="@+id/etStartTime"
+                    app:hintEnabled="false"
+                    app:boxStrokeColor="@color/input_stroke_selector"
+                    app:boxBackgroundColor="@color/input_background_selector"
+                    app:hintTextColor="@color/input_hint_selector">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etStartDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:hint="25/03/2026"
+                        android:textColor="@color/input_text"
+                        android:textColorHint="@color/input_hint"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutTime"
+                    style="@style/AppTextInputLayout"
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="16dp"
-                    android:background="@android:color/transparent"
-                    android:focusable="false"
-                    android:gravity="center_vertical"
-                    android:hint="10:00 AM"
-                    android:paddingHorizontal="4dp"
-                    android:textColor="#002147"
-                    android:textSize="16sp" />
+                    app:hintEnabled="false"
+                    app:boxStrokeColor="@color/input_stroke_selector"
+                    app:boxBackgroundColor="@color/input_background_selector"
+                    app:hintTextColor="@color/input_hint_selector">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etStartTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:hint="10:00 AM"
+                        android:textColor="@color/input_text"
+                        android:textColorHint="@color/input_hint"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <HorizontalScrollView
@@ -229,7 +253,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_alert"
-                    app:tint="#017497" />
+                    app:tint="#017497"
+                    android:contentDescription="Alert icon" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -378,41 +403,46 @@
             tools:listitem="@layout/item_housekeeper_selectable" />
 
         <!-- Navigation Buttons -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/layoutNavButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/rvHousekeepers"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
                 android:id="@+id/btnBackStep2"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
                 android:text="Back"
                 android:textAllCaps="false"
                 android:textColor="#017497"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:strokeColor="#017497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:cornerRadius="8dp"/>
 
             <Button
                 android:id="@+id/btnNextStep2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/btn_gradient_blue"
                 android:text="Next"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:backgroundTint="@null"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:cornerRadius="8dp"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -84,7 +84,8 @@ class HousekeeperPage : AppCompatActivity() {
                     val randomColor = Color.parseColor(colors[colorIndex])
                     (profileBg.background as? GradientDrawable)?.setColor(randomColor)
                     
-                    val strokeColor = if (it.isOnline) Color.parseColor("#0DFF00") else Color.parseColor("#888888")
+                    // Fixed green stroke color as requested
+                    val strokeColor = Color.parseColor("#0DFF00")
                     (statusStroke.background as? GradientDrawable)?.setStroke(6, strokeColor)
                 }
             }

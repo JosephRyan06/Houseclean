@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="320dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="12dp"
-    app:cardBackgroundColor="#FFFFFF"
+    app:cardBackgroundColor="#F5F5F5"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
     app:contentPadding="16dp">
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Afton, Michael"
             android:textColor="#017497"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
@@ -29,26 +29,54 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvStatusLabel"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvUserEmail"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Status: "
-            android:textColor="#424242"
-            android:textSize="14sp"
+            android:text="example@email.com"
+            android:textColor="#5E6D82"
+            android:textSize="12sp"
             android:textStyle="italic"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@+id/profileIconContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvHKName" />
 
         <TextView
-            android:id="@+id/tvStatusValue"
+            android:id="@+id/tvHKPhone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="09123456789"
+            android:textColor="#5E6D82"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/profileIconContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUserEmail" />
+
+        <RatingBar
+            android:id="@+id/rbHKRating"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Active"
-            android:textColor="#333A5B"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            app:layout_constraintStart_toEndOf="@id/tvStatusLabel"
-            app:layout_constraintTop_toTopOf="@id/tvStatusLabel" />
+            android:layout_marginTop="4dp"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:progressTint="#FFD700"
+            android:rating="4.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHKPhone" />
+
+        <TextView
+            android:id="@+id/tvHKRatingsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="(0 ratings)"
+            android:textColor="#5E6D82"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/rbHKRating"
+            app:layout_constraintStart_toEndOf="@id/rbHKRating"
+            app:layout_constraintTop_toTopOf="@id/rbHKRating" />
 
         <TextView
             android:id="@+id/tvJoinedLabel"
@@ -60,7 +88,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvStatusValue" />
+            app:layout_constraintTop_toBottomOf="@id/rbHKRating" />
 
         <TextView
             android:id="@+id/tvJoinedValue"
@@ -100,10 +128,44 @@
             app:layout_constraintStart_toEndOf="@id/tvAvailableLabel"
             app:layout_constraintTop_toTopOf="@id/tvAvailableLabel" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnProfileDetails"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Check Profile"
+            android:textAllCaps="false"
+            android:textColor="#017497"
+            android:textSize="14sp"
+            app:strokeColor="#017497"
+            app:cornerRadius="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAvailableValue" />
+
+        <TextView
+            android:id="@+id/tvStatusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: "
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnProfileDetails" />
+
+        <TextView
+            android:id="@+id/tvStatusValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Active"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvStatusLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvStatusLabel" />
+
         <FrameLayout
             android:id="@+id/profileIconContainer"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -120,7 +182,7 @@
                 android:layout_gravity="center"
                 android:text="AM"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <View
@@ -145,7 +207,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAvailableValue" />
+            app:layout_constraintTop_toBottomOf="@id/btnProfileDetails" />
 
         <!-- Buttons Section for Housekeeper -->
         <LinearLayout
@@ -167,7 +229,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:backgroundTint="@null"
                 app:cornerRadius="8dp" />
 

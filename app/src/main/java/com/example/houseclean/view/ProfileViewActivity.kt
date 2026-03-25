@@ -115,14 +115,20 @@ class ProfileViewActivity : AppCompatActivity() {
                         text = "Experience: ${user.experience.ifBlank { "Not specified" }}"
                     }
                     findViewById<TextView>(R.id.tvSectionTitle).text = "TASKS"
-                    findViewById<ImageView>(R.id.ivSectionIcon).setImageResource(R.drawable.ic_task)
+                    findViewById<ImageView>(R.id.ivSectionIcon).apply {
+                        setImageResource(R.drawable.task_image)
+                        colorFilter = null // Ensure no tint is applied
+                    }
                 } else {
                     findViewById<TextView>(R.id.tvProfileRatings).visibility = View.GONE
                     findViewById<TextView>(R.id.tvProfileAvailability).visibility = View.GONE
                     findViewById<TextView>(R.id.tvProfileSkills).visibility = View.GONE
                     findViewById<TextView>(R.id.tvProfileExperience).visibility = View.GONE
                     findViewById<TextView>(R.id.tvSectionTitle).text = "REQUESTS"
-                    findViewById<ImageView>(R.id.ivSectionIcon).setImageResource(R.drawable.ic_request)
+                    findViewById<ImageView>(R.id.ivSectionIcon).apply {
+                        setImageResource(R.drawable.request_image)
+                        colorFilter = null // Ensure no tint is applied
+                    }
                 }
 
                 if (!isReadOnly) {

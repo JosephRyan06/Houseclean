@@ -275,8 +275,7 @@
                             android:layout_height="80dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_request"
-                            app:tint="#424242" />
+                            android:src="@drawable/request_image" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -356,8 +355,7 @@
                             android:layout_height="80dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_payment"
-                            app:tint="#424242" />
+                            android:src="@drawable/payment_image" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 

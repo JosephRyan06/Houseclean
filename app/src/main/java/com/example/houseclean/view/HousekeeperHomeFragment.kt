@@ -31,7 +31,11 @@ class HousekeeperHomeFragment : Fragment() {
     private val userRepository = UserRepository()
     private lateinit var layoutRequests: LinearLayout
     private lateinit var layoutPayments: LinearLayout
-    private lateinit var tvNoData: TextView
+    private lateinit var tvNoRequests: TextView
+    private lateinit var tvNoPayments: TextView
+    private lateinit var hsvRequests: View
+    private lateinit var hsvPayments: View
+    private lateinit var tvWelcomeName: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,9 +49,27 @@ class HousekeeperHomeFragment : Fragment() {
 
         layoutRequests = view.findViewById(R.id.layoutRequestsContainer)
         layoutPayments = view.findViewById(R.id.layoutPaymentsContainer)
-        tvNoData = view.findViewById(R.id.tvNoData)
+        tvNoRequests = view.findViewById(R.id.tvNoRequests)
+        tvNoPayments = view.findViewById(R.id.tvNoPayments)
+        hsvRequests = view.findViewById(R.id.hsvRequests)
+        hsvPayments = view.findViewById(R.id.hsvPayments)
+        tvWelcomeName = view.findViewById(R.id.tvWelcomeName)
 
+        setupWelcomeText()
         fetchData()
+    }
+
+    private fun setupWelcomeText() {
+        val currentUid = repository.getCurrentUserUid() ?: return
+        userRepository.getUserData(currentUid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                user?.let {
+                    tvWelcomeName.text = "Welcome ${it.lastName}, ${it.firstName}!"
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 
     private fun fetchData() {
@@ -59,7 +81,8 @@ class HousekeeperHomeFragment : Fragment() {
                 layoutRequests.removeAllViews()
                 layoutPayments.removeAllViews()
 
-                var hasData = false
+                var hasRequests = false
+                var hasPayments = false
                 
                 for (child in snapshot.children) {
                     val request = child.getValue(ServiceRequest::class.java) ?: continue
@@ -70,17 +93,21 @@ class HousekeeperHomeFragment : Fragment() {
                     // Requests Section: PENDING, PENDING_PAYMENT, or RESERVED (but not yet accepted)
                     if (status == "PENDING" || status == "PENDING_PAYMENT" || status == "RESERVED") {
                         addRequestCard(finalRequest)
-                        hasData = true
+                        hasRequests = true
                     } 
                     
                     // Payments Section: status ACCEPTED and paymentStatus RESERVED or PENDING
                     if (status == "ACCEPTED" && (finalRequest.paymentStatus == "RESERVED" || finalRequest.paymentStatus == "PENDING")) {
                         addPaymentCard(finalRequest)
-                        hasData = true
+                        hasPayments = true
                     }
                 }
                 
-                tvNoData.visibility = if (hasData) View.GONE else View.VISIBLE
+                tvNoRequests.visibility = if (hasRequests) View.GONE else View.VISIBLE
+                hsvRequests.visibility = if (hasRequests) View.VISIBLE else View.GONE
+                
+                tvNoPayments.visibility = if (hasPayments) View.GONE else View.VISIBLE
+                hsvPayments.visibility = if (hasPayments) View.VISIBLE else View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {

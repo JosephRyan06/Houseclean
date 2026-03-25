@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -37,6 +38,12 @@ class Step3ReviewFragment : Fragment() {
 
         val housekeeperLayout = view.findViewById<View>(R.id.layoutHousekeeperSummary)
         val tvHousekeeper = housekeeperLayout.findViewById<TextView>(R.id.tvHKName)
+        val tvJoinedValue = housekeeperLayout.findViewById<TextView>(R.id.tvJoinedValue)
+        val tvAvailableValue = housekeeperLayout.findViewById<TextView>(R.id.tvAvailableValue)
+        val tvPhone = housekeeperLayout.findViewById<TextView>(R.id.tvHKPhone)
+        val rbRating = housekeeperLayout.findViewById<RatingBar>(R.id.rbHKRating)
+        val tvRatingCount = housekeeperLayout.findViewById<TextView>(R.id.tvHKRatingsCount)
+        
         val tvService = view.findViewById<TextView>(R.id.tvSummaryService)
         val tvSchedule = view.findViewById<TextView>(R.id.tvSummaryDate)
         val tvPrice = view.findViewById<TextView>(R.id.tvSummaryPrice)
@@ -47,14 +54,6 @@ class Step3ReviewFragment : Fragment() {
 
         // Hide time as it's included in formatted schedule
         view.findViewById<View>(R.id.tvSummaryTime).visibility = View.GONE
-
-        // Setup housekeeper layout defaults
-        housekeeperLayout.findViewById<View>(R.id.tvStatusLabel).visibility = View.GONE
-        housekeeperLayout.findViewById<View>(R.id.tvStatusValue).visibility = View.GONE
-        housekeeperLayout.findViewById<View>(R.id.tvJoinedLabel).visibility = View.GONE
-        housekeeperLayout.findViewById<View>(R.id.tvJoinedValue).visibility = View.GONE
-        housekeeperLayout.findViewById<View>(R.id.tvAvailableLabel).visibility = View.GONE
-        housekeeperLayout.findViewById<View>(R.id.tvAvailableValue).visibility = View.GONE
 
         viewModel.request.observe(viewLifecycleOwner) { request ->
             tvHousekeeper.text = request.housekeeperName
@@ -69,6 +68,24 @@ class Step3ReviewFragment : Fragment() {
                 request.housekeeperName.split(" ").filter { it.isNotEmpty() }
                     .map { it[0] }.take(2).joinToString("").uppercase()
             } else "?"
+
+            // Fetch extra housekeeper data from database
+            if (request.housekeeperId.isNotEmpty()) {
+                repository.getUserData(request.housekeeperId).addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val housekeeper = snapshot.getValue(User::class.java)
+                        if (housekeeper != null) {
+                            tvJoinedValue.text = housekeeper.joined
+                            tvAvailableValue.text = housekeeper.availability?.toString() ?: "Not specified"
+                            tvPhone.text = housekeeper.phone.ifEmpty { housekeeper.contact }
+                            
+                            rbRating.rating = housekeeper.ratingAverage.toFloat()
+                            tvRatingCount.text = "(${housekeeper.ratingCount} reviews)"
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+            }
             
             btnSubmit.setOnClickListener {
                 if (request.housekeeperId.isEmpty()) {

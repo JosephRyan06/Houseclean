@@ -135,7 +135,12 @@ class TasksFragment : Fragment() {
                 hsvUpcoming.visibility = if (upcomingCount > 0) View.VISIBLE else View.GONE
                 
                 tvNoTasks.visibility = if (totalCount == 0) View.VISIBLE else View.GONE
-                tvNoTasks.text = "No ${currentFilter.lowercase()} tasks found"
+                tvNoTasks.text = when(currentFilter) {
+                    "PENDING" -> "No pending tasks found"
+                    "ON-GOING" -> "No ongoing tasks found"
+                    "COMPLETED" -> "No completed tasks found"
+                    else -> "No tasks found"
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {

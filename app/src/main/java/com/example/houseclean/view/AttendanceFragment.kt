@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -28,105 +29,86 @@ class AttendanceFragment : Fragment() {
     private lateinit var tvNoAttendance: TextView
     private lateinit var tvTodayLabel: TextView
     private lateinit var tvUpcomingLabel: TextView
-    private lateinit var hsvToday: View
-    private lateinit var hsvUpcoming: View
-    private var currentStatusFilter = "ACCEPTED" // "On-Going" maps to ACCEPTED
+    private var currentStatusFilter = "ACCEPTED"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_attendance, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_attendance, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+        val tabLayout = view.findViewById<TabLayout>(R.id.tabLayoutAttendance)
         layoutToday = view.findViewById(R.id.layoutTodayAttendance)
         layoutUpcoming = view.findViewById(R.id.layoutUpcomingAttendance)
         tvNoAttendance = view.findViewById(R.id.tvNoAttendance)
         tvTodayLabel = view.findViewById(R.id.tvTodayLabel)
         tvUpcomingLabel = view.findViewById(R.id.tvUpcomingLabel)
-        hsvToday = view.findViewById(R.id.hsvToday)
-        hsvUpcoming = view.findViewById(R.id.hsvUpcoming)
-        val tabLayout = view.findViewById<TabLayout>(R.id.tabLayoutAttendance)
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                currentStatusFilter = when (tab?.text.toString().uppercase()) {
-                    "ON-GOING" -> "ACCEPTED"
-                    "PRESENT" -> "COMPLETED"
-                    "LATE" -> "LATE" 
+                currentStatusFilter = when (tab?.position) {
+                    0 -> "ACCEPTED"
+                    1 -> "COMPLETED"
+                    2 -> "CANCELLED"
                     else -> "ACCEPTED"
                 }
-                fetchAttendance()
+                loadAttendanceData()
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        fetchAttendance()
+        loadAttendanceData()
+
+        return view
     }
 
-    private fun fetchAttendance() {
+    private fun loadAttendanceData() {
         val currentUid = repository.getCurrentUserUid() ?: return
-        
         repository.getHousekeeperRequests(currentUid).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (!isAdded) return
                 layoutToday.removeAllViews()
                 layoutUpcoming.removeAllViews()
-                
-                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val today = sdf.format(Date())
-                var totalCount = 0
-                var todayCount = 0
-                var upcomingCount = 0
 
-                val requests = mutableListOf<ServiceRequest>()
-                for (child in snapshot.children) {
-                    val request = child.getValue(ServiceRequest::class.java)
+                var hasData = false
+                val today = Calendar.getInstance()
+                val sdf = SimpleDateFormat("d/M/yyyy", Locale.getDefault())
+                val todayStr = sdf.format(today.time)
+
+                for (requestSnapshot in snapshot.children) {
+                    val request = requestSnapshot.getValue(ServiceRequest::class.java)
                     if (request != null && request.status == currentStatusFilter) {
-                        val finalRequest = if (request.requestId.isEmpty()) {
-                            request.copy(requestId = child.key ?: "")
+                        hasData = true
+                        if (request.startDate == todayStr) {
+                            addAttendanceCard(request, layoutToday)
                         } else {
-                            request
+                            addAttendanceCard(request, layoutUpcoming)
                         }
-                        requests.add(finalRequest)
                     }
                 }
 
-                // Sort by date
-                requests.sortBy { it.startDate }
-
-                for (request in requests) {
-                    val requestDate = if (request.startDate.contains("T")) {
-                        request.startDate.split("T")[0]
-                    } else {
-                        request.startDate
-                    }
-                    
-                    if (requestDate == today) {
-                        addAttendanceCard(request, layoutToday)
-                        todayCount++
-                    } else {
-                        addAttendanceCard(request, layoutUpcoming)
-                        upcomingCount++
-                    }
-                    totalCount++
+                tvNoAttendance.visibility = if (hasData) View.GONE else View.VISIBLE
+                tvNoAttendance.text = when(currentStatusFilter) {
+                    "ACCEPTED" -> "No ongoing attendance"
+                    "COMPLETED" -> "No presence records"
+                    "CANCELLED" -> "No late records"
+                    else -> "No attendance records found"
                 }
                 
-                tvTodayLabel.visibility = if (todayCount > 0) View.VISIBLE else View.GONE
-                hsvToday.visibility = if (todayCount > 0) View.VISIBLE else View.GONE
+                val hsvToday = view?.findViewById<View>(R.id.hsvToday)
+                val hsvUpcoming = view?.findViewById<View>(R.id.hsvUpcoming)
                 
-                tvUpcomingLabel.visibility = if (upcomingCount > 0) View.VISIBLE else View.GONE
-                hsvUpcoming.visibility = if (upcomingCount > 0) View.VISIBLE else View.GONE
+                tvTodayLabel.visibility = if (layoutToday.childCount > 0) View.VISIBLE else View.GONE
+                hsvToday?.visibility = if (layoutToday.childCount > 0) View.VISIBLE else View.GONE
                 
-                tvNoAttendance.visibility = if (totalCount == 0) View.VISIBLE else View.GONE
+                tvUpcomingLabel.visibility = if (layoutUpcoming.childCount > 0) View.VISIBLE else View.GONE
+                hsvUpcoming?.visibility = if (layoutUpcoming.childCount > 0) View.VISIBLE else View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("AttendanceFragment", "Error: ${error.message}")
+                Log.e("AttendanceFragment", "Error loading data", error.toException())
             }
         })
     }
@@ -145,12 +127,20 @@ class AttendanceFragment : Fragment() {
             val tvJoinedValue = view.findViewById<TextView>(R.id.tvJoinedValue)
             val tvAvailableLabel = view.findViewById<TextView>(R.id.tvAvailableLabel)
             val tvAvailableValue = view.findViewById<TextView>(R.id.tvAvailableValue)
+            val btnProfile = view.findViewById<Button>(R.id.btnProfileDetails)
             
             tvHKName.text = request.householderName
             tvJoinedLabel.text = "Service: "
             tvJoinedValue.text = request.serviceType
             tvAvailableLabel.text = "Schedule: "
             tvAvailableValue.text = formatSchedule(request.startDate)
+            
+            btnProfile.setOnClickListener {
+                val intent = Intent(requireContext(), ProfileViewActivity::class.java)
+                intent.putExtra("isReadOnly", true)
+                intent.putExtra("uid", request.householderId)
+                startActivity(intent)
+            }
             
             if (request.staffArrived) {
                 tvStatusValue.text = "Awaiting Confirmation"
@@ -167,20 +157,32 @@ class AttendanceFragment : Fragment() {
                 }
             }
         } else {
-            view.findViewById<TextView>(R.id.tvDateTime).text = formatSchedule(request.startDate)
+            val tvDateTime = view.findViewById<TextView>(R.id.tvDateTime)
+            if (tvDateTime != null) {
+                tvDateTime.text = formatSchedule(request.startDate)
+            }
             view.findViewById<TextView>(R.id.tvDate).text = formatDate(request.startDate)
             view.findViewById<TextView>(R.id.tvService).text = request.serviceType
             view.findViewById<TextView>(R.id.labelHousekeeper).text = "Householder: "
             view.findViewById<TextView>(R.id.tvHousekeeper).text = request.householderName
             view.findViewById<TextView>(R.id.tvPayment).text = "PHP ${request.totalPrice.toInt()}"
-            view.findViewById<View>(R.id.btnViewDetails).setOnClickListener {
-                val intent = Intent(activity, ServiceDetailsActivity::class.java)
-                intent.putExtra("requestId", request.requestId)
-                startActivity(intent)
-            }
         }
 
         container.addView(view)
+    }
+
+    private fun formatSchedule(dateStr: String?): String {
+        if (dateStr == null) return "N/A"
+        return try {
+            val date = if (dateStr.contains("T")) {
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).parse(dateStr)
+            } else {
+                SimpleDateFormat("d/M/yyyy", Locale.getDefault()).parse(dateStr)
+            }
+            SimpleDateFormat("MMMM d, yyyy, h:mm a", Locale.getDefault()).format(date!!)
+        } catch (e: Exception) {
+            dateStr
+        }
     }
 
     private fun formatDate(dateStr: String): String {
@@ -190,36 +192,7 @@ class AttendanceFragment : Fragment() {
             } else {
                 SimpleDateFormat("d/M/yyyy", Locale.getDefault()).parse(dateStr)
             }
-            SimpleDateFormat("MMMM d, yyyy", Locale.getDefault()).format(date!!)
-        } catch (e: Exception) {
-            dateStr
-        }
-    }
-
-    private fun formatSchedule(dateStr: String): String {
-        return try {
-            val inputDate: Date? = if (dateStr.contains("T")) {
-                SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).parse(dateStr)
-            } else {
-                SimpleDateFormat("d/M/yyyy", Locale.getDefault()).parse(dateStr)
-            }
-            
-            val dayName = SimpleDateFormat("EEEE", Locale.getDefault()).format(inputDate!!).uppercase()
-            val timeStr = SimpleDateFormat("h:mm a", Locale.getDefault()).format(inputDate)
-
-            val cal = Calendar.getInstance()
-            cal.time = inputDate
-            val hour24 = cal.get(Calendar.HOUR_OF_DAY)
-            
-            val period = when (hour24) {
-                in 5..11 -> "Morning"
-                in 12..16 -> "Afternoon"
-                in 17..20 -> "Evening"
-                in 21..23 -> "Night"
-                else -> "Midnight"
-            }
-            
-            "$dayName, $period, $timeStr"
+            SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date!!)
         } catch (e: Exception) {
             dateStr
         }

@@ -1,9 +1,11 @@
 package com.example.houseclean.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -95,7 +97,11 @@ class ServiceDetailsActivity : AppCompatActivity() {
         repository.getUserData(request.householderId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
-                user?.let { populateUserCard(findViewById(R.id.cardHouseholder), it) }
+                val uid = snapshot.key ?: ""
+                user?.let { 
+                    val finalUser = if (it.uid.isEmpty()) it.copy(uid = uid) else it
+                    populateUserCard(findViewById(R.id.cardHouseholder), finalUser, true) 
+                }
             }
             override fun onCancelled(error: DatabaseError) {}
         })
@@ -104,29 +110,55 @@ class ServiceDetailsActivity : AppCompatActivity() {
         repository.getUserData(request.housekeeperId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
-                user?.let { populateUserCard(findViewById(R.id.cardHousekeeper), it) }
+                val uid = snapshot.key ?: ""
+                user?.let { 
+                    val finalUser = if (it.uid.isEmpty()) it.copy(uid = uid) else it
+                    populateUserCard(findViewById(R.id.cardHousekeeper), finalUser, false) 
+                }
             }
             override fun onCancelled(error: DatabaseError) {}
         })
     }
 
-    private fun populateUserCard(cardView: View, user: User) {
+    private fun populateUserCard(cardView: View, user: User, isHouseholder: Boolean) {
         val tvName = cardView.findViewById<TextView>(R.id.tvHKName)
+        val tvEmail = cardView.findViewById<TextView>(R.id.tvUserEmail)
         val tvStatusValue = cardView.findViewById<TextView>(R.id.tvStatusValue)
         val tvJoinedValue = cardView.findViewById<TextView>(R.id.tvJoinedValue)
+        val tvAvailableLabel = cardView.findViewById<TextView>(R.id.tvAvailableLabel)
         val tvAvailableValue = cardView.findViewById<TextView>(R.id.tvAvailableValue)
         val tvInitials = cardView.findViewById<TextView>(R.id.tvProfileInitials)
         val profileBg = cardView.findViewById<View>(R.id.profileBg)
         val statusStroke = cardView.findViewById<View>(R.id.viewStatusStroke)
+        val rbRating = cardView.findViewById<RatingBar>(R.id.rbHKRating)
+        val tvRatingCount = cardView.findViewById<TextView>(R.id.tvHKRatingsCount)
+        val tvPhone = cardView.findViewById<TextView>(R.id.tvHKPhone)
 
         tvName.text = user.getDisplayName()
+        tvEmail.visibility = View.VISIBLE
+        tvEmail.text = user.email
+        tvPhone.text = user.phone.ifEmpty { user.contact }
+        
         tvStatusValue.text = user.status
         tvJoinedValue.text = user.joined
         
-        tvAvailableValue.text = when (val avail = user.availability) {
-            is String -> avail
-            is List<*> -> avail.joinToString(", ")
-            else -> "Not specified"
+        if (isHouseholder) {
+            rbRating.visibility = View.GONE
+            tvRatingCount.visibility = View.GONE
+            tvAvailableLabel.text = "Created At: "
+            tvAvailableValue.text = user.joined
+        } else {
+            rbRating.visibility = View.VISIBLE
+            tvRatingCount.visibility = View.VISIBLE
+            tvRatingCount.text = user.getRatingsDisplay()
+            rbRating.rating = user.ratingAverage.toFloat()
+            
+            tvAvailableLabel.text = "Available: "
+            tvAvailableValue.text = when (val avail = user.availability) {
+                is String -> avail
+                is List<*> -> avail.joinToString(", ")
+                else -> "Not specified"
+            }
         }
 
         // Initials and Color
@@ -141,5 +173,13 @@ class ServiceDetailsActivity : AppCompatActivity() {
         
         val strokeColor = if (user.isOnline) Color.parseColor("#0DFF00") else Color.parseColor("#888888")
         (statusStroke.background as? GradientDrawable)?.setStroke(6, strokeColor)
+
+        // Set up "Check Profile" button
+        cardView.findViewById<View>(R.id.btnProfileDetails).setOnClickListener {
+            val intent = Intent(this, ProfileViewActivity::class.java)
+            intent.putExtra("uid", user.uid)
+            intent.putExtra("isReadOnly", true)
+            startActivity(intent)
+        }
     }
 }

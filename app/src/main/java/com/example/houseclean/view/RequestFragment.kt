@@ -54,10 +54,6 @@ class RequestFragment : Fragment() {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 currentStatus = tab?.text.toString().uppercase()
-                // "Accepted" tab maps to "ACCEPTED" in db
-                // "Pending" tab maps to "PENDING" in db
-                // "Declined" tab maps to "DECLINED" in db
-                // "Cancelled" tab maps to "CANCELLED" in db
                 fetchRequests()
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -85,13 +81,20 @@ class RequestFragment : Fragment() {
                 val requests = mutableListOf<ServiceRequest>()
                 for (child in snapshot.children) {
                     val request = child.getValue(ServiceRequest::class.java)
-                    if (request != null && request.status == currentStatus) {
-                        val finalRequest = if (request.requestId.isEmpty()) {
-                            request.copy(requestId = child.key ?: "")
-                        } else {
-                            request
+                    if (request != null) {
+                        val matchesStatus = when (currentStatus) {
+                            "PENDING" -> request.status == "PENDING_PAYMENT" || request.status == "RESERVED" || request.status == "PENDING"
+                            else -> request.status == currentStatus
                         }
-                        requests.add(finalRequest)
+
+                        if (matchesStatus) {
+                            val finalRequest = if (request.requestId.isEmpty()) {
+                                request.copy(requestId = child.key ?: "")
+                            } else {
+                                request
+                            }
+                            requests.add(finalRequest)
+                        }
                     }
                 }
 
@@ -140,6 +143,7 @@ class RequestFragment : Fragment() {
         view.findViewById<TextView>(R.id.tvPayment).text = "PHP ${request.totalPrice.toInt()}"
 
         val btnCancel = view.findViewById<View>(R.id.btnCancelRequest)
+        // Show cancel button for any pending state
         if (currentStatus == "PENDING") {
             btnCancel.visibility = View.VISIBLE
             btnCancel.setOnClickListener {

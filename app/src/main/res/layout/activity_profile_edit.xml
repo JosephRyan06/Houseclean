@@ -125,83 +125,68 @@
                     android:visibility="visible">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/AppTextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Last Name"
-                        android:textColorHint="@color/input_hint_selector"
-                        app:boxStrokeColor="@color/input_stroke_selector"
-                        app:hintTextColor="@color/input_hint_selector">
+                        android:hint="Last Name">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditLastName"
+                            style="@style/AppTextInputEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="#888888" />
+                            android:layout_height="wrap_content" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/AppTextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="First Name"
-                        android:textColorHint="@color/input_hint_selector"
-                        app:boxStrokeColor="@color/input_stroke_selector"
-                        app:hintTextColor="@color/input_hint_selector">
+                        android:hint="First Name">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditFirstName"
+                            style="@style/AppTextInputEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="#888888" />
+                            android:layout_height="wrap_content" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        style="@style/AppExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Select Barangay"
-                        android:textColorHint="@color/input_hint_selector"
-                        app:boxStrokeColor="@color/input_stroke_selector"
-                        app:hintTextColor="@color/input_hint_selector">
+                        android:hint="Select Barangay">
                         <AutoCompleteTextView
                             android:id="@+id/dropdownEditBarangay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
-                            android:textColor="#888888" />
+                            android:textColor="@color/input_text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/AppTextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="House Number / Street"
-                        android:textColorHint="@color/input_hint_selector"
-                        app:boxStrokeColor="@color/input_stroke_selector"
-                        app:hintTextColor="@color/input_hint_selector">
+                        android:hint="House Number / Street">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditStreet"
+                            style="@style/AppTextInputEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="#888888" />
+                            android:layout_height="wrap_content" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/AppTextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Landmark"
-                        android:textColorHint="@color/input_hint_selector"
-                        app:boxStrokeColor="@color/input_stroke_selector"
-                        app:hintTextColor="@color/input_hint_selector">
+                        android:hint="Landmark">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditLandmark"
+                            style="@style/AppTextInputEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="#888888" />
+                            android:layout_height="wrap_content" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Housekeeper Specific Fields -->
@@ -228,66 +213,58 @@
                             android:layout_marginTop="8dp">
 
                             <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                style="@style/AppTextInputLayout"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="4dp"
-                                android:hint="Days (e.g. Mon-Fri)"
-                                android:textColorHint="@color/input_hint_selector"
-                                app:boxStrokeColor="@color/input_stroke_selector">
+                                android:hint="Days (e.g. Mon-Fri)">
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/etEditAvailabilityDays"
+                                    style="@style/AppTextInputEditText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#888888" />
+                                    android:layout_height="wrap_content" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                style="@style/AppTextInputLayout"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginStart="4dp"
-                                android:hint="Time (e.g. 9AM-5PM)"
-                                android:textColorHint="@color/input_hint_selector"
-                                app:boxStrokeColor="@color/input_stroke_selector">
+                                android:hint="Time (e.g. 9AM-5PM)">
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/etEditAvailabilityTime"
+                                    style="@style/AppTextInputEditText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="#888888" />
+                                    android:layout_height="wrap_content" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            style="@style/AppTextInputLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:hint="Skills"
-                            android:textColorHint="@color/input_hint_selector"
-                            app:boxStrokeColor="@color/input_stroke_selector">
+                            android:hint="Skills">
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etEditSkills"
+                                style="@style/AppTextInputEditText"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="#888888" />
+                                android:layout_height="wrap_content" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            style="@style/AppTextInputLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:hint="Experience"
-                            android:textColorHint="@color/input_hint_selector"
-                            app:boxStrokeColor="@color/input_stroke_selector">
+                            android:hint="Experience">
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etEditExperience"
+                                style="@style/AppTextInputEditText"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="#888888" />
+                                android:layout_height="wrap_content" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
@@ -303,18 +280,16 @@
                     android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/AppTextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email"
-                        android:textColorHint="@color/input_hint_selector"
-                        app:boxStrokeColor="@color/input_stroke_selector">
+                        android:hint="Email">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditEmail"
+                            style="@style/AppTextInputEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:enabled="true"
-                            android:textColor="#888888" />
+                            android:enabled="true" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
@@ -357,18 +332,16 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/AppTextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:hint="Phone Number"
-                        android:textColorHint="@color/input_hint_selector"
-                        app:boxStrokeColor="@color/input_stroke_selector">
+                        android:hint="Phone Number">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEditPhone"
+                            style="@style/AppTextInputEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="#888888" />
+                            android:layout_height="wrap_content" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView

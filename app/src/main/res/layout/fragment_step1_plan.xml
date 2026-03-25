@@ -236,7 +236,9 @@
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeColor="#D9D9D9"
+            app:boxStrokeColor="@color/input_stroke_selector"
+            app:boxBackgroundColor="@color/input_background_selector"
+            app:hintTextColor="@color/input_hint_selector"
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -250,7 +252,8 @@
                 android:hint="Gate code, parking, pets, surfaces to avoid..."
                 android:inputType="textMultiLine"
                 android:lines="3"
-                android:textColor="#5E6D82"
+                android:textColor="@color/input_text"
+                android:textColorHint="@color/input_hint"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 

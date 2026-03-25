@@ -115,14 +115,16 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancelRequest"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#B00020"
             android:text="Cancel"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textColor="#017497"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="gone"
+            app:strokeColor="#017497"
             app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

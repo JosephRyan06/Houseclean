@@ -1,6 +1,7 @@
 package com.example.houseclean.view
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -79,6 +80,7 @@ class Step2ScheduleFragment : Fragment() {
         setupFilters()
 
         etStartDate.setOnClickListener { showDatePicker() }
+        etStartTime.setOnClickListener { showTimePicker() }
         
         btnQuickBook.setOnClickListener {
             isQuickBook = true
@@ -225,6 +227,32 @@ class Step2ScheduleFragment : Fragment() {
             refreshStaffAvailabilityCounts()
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         dialog.datePicker.minDate = System.currentTimeMillis() - 1000
+        dialog.show()
+    }
+
+    private fun showTimePicker() {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val dialog = TimePickerDialog(requireContext(), { _, h, m ->
+            val cal = Calendar.getInstance()
+            cal.set(Calendar.HOUR_OF_DAY, h)
+            cal.set(Calendar.MINUTE, m)
+            
+            val sdf12 = SimpleDateFormat("h:mm a", Locale.getDefault())
+            val sdf24 = SimpleDateFormat("HH:mm", Locale.getDefault())
+            
+            tempTime = sdf24.format(cal.time)
+            etStartTime.setText(sdf12.format(cal.time))
+            
+            // Deselect any preset time slot
+            for (i in 0 until layoutTimeSlots.childCount) {
+                layoutTimeSlots.getChildAt(i).isSelected = false
+            }
+            
+            refreshStaffAvailabilityCounts()
+        }, hour, minute, false)
         dialog.show()
     }
 

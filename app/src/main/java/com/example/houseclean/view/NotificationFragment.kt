@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.houseclean.R
-import com.example.houseclean.model.ContactMessage
 import com.example.houseclean.model.Notification
 import com.example.houseclean.model.ServiceRepository
 import com.google.android.material.button.MaterialButton
@@ -57,41 +56,19 @@ class NotificationFragment : Fragment() {
     private fun fetchData() {
         val currentUid = repository.getCurrentUserUid() ?: return
         
-        val notificationsMap = mutableMapOf<String, Notification>()
-        
         repository.getUserNotifications(currentUid).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(userNotifSnapshot: DataSnapshot) {
-                notificationsMap.clear()
+                if (!isAdded) return
+                val notificationsList = mutableListOf<Notification>()
                 
                 for (child in userNotifSnapshot.children) {
                     val n = child.getValue(Notification::class.java)
                     if (n != null) {
-                        notificationsMap[child.key!!] = n.copy(id = child.key!!)
+                        notificationsList.add(n.copy(id = child.key!!))
                     }
                 }
                 
-                repository.getContactMessages().addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(contactSnapshot: DataSnapshot) {
-                        for (child in contactSnapshot.children) {
-                            val msg = child.getValue(ContactMessage::class.java)
-                            if (msg != null) {
-                                val n = Notification(
-                                    id = child.key!!,
-                                    title = "Contact Request",
-                                    body = msg.message,
-                                    createdAt = msg.createdAt,
-                                    read = msg.status == "read",
-                                    type = "CONTACT_MESSAGE",
-                                    senderName = msg.name,
-                                    email = msg.email
-                                )
-                                notificationsMap["CONTACT_${child.key}"] = n
-                            }
-                        }
-                        updateUI(notificationsMap.values.toList())
-                    }
-                    override fun onCancelled(error: DatabaseError) {}
-                })
+                updateUI(notificationsList)
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.e("NotificationFragment", "Error: ${error.message}")
@@ -141,7 +118,7 @@ class NotificationFragment : Fragment() {
         tvDateTime.text = sdf.format(Date(notification.createdAt))
 
         // Logic for email and sender name visibility
-        if (notification.email.isEmpty() && notification.source.isNotEmpty()) {
+        if (notification.email.isEmpty() && notification.source.isEmpty()) {
             tvEmail.visibility = View.GONE
             tvSenderName.visibility = View.GONE
         } else {
@@ -174,21 +151,11 @@ class NotificationFragment : Fragment() {
         }
 
         btnRemove.setOnClickListener {
-            if (notification.type == "CONTACT_MESSAGE") {
-                val realId = notification.id.removePrefix("CONTACT_")
-                repository.deleteContactMessage(realId)
-            } else {
-                repository.deleteNotification(currentUid, notification.id)
-            }
+            repository.deleteNotification(currentUid, notification.id)
         }
         
         if (!notification.read) {
-            if (notification.type == "CONTACT_MESSAGE") {
-                val realId = notification.id.removePrefix("CONTACT_")
-                repository.markContactMessageAsRead(realId)
-            } else {
-                repository.markNotificationAsRead(currentUid, notification.id)
-            }
+            repository.markNotificationAsRead(currentUid, notification.id)
         }
 
         layoutNotificationsContainer.addView(view)

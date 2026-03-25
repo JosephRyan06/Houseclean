@@ -13,6 +13,17 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <TextView
+            android:id="@+id/tvWelcomeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/welcome_text_border"
+            android:text="Welcome Housekeeper!"
+            android:textColor="#017497"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
         <!-- Requests Section -->
         <TextView
             android:id="@+id/tvRequestsTitle"
@@ -28,7 +39,7 @@
             android:id="@+id/hsvRequests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="12dp"
             android:scrollbars="none">
 
             <LinearLayout
@@ -37,6 +48,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
         </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/tvNoRequests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="No requests found"
+            android:textColor="#757575"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <!-- Payments Section -->
         <TextView
@@ -53,7 +76,7 @@
             android:id="@+id/hsvPayments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="12dp"
             android:scrollbars="none">
 
             <LinearLayout
@@ -64,12 +87,13 @@
         </HorizontalScrollView>
 
         <TextView
-            android:id="@+id/tvNoData"
+            android:id="@+id/tvNoPayments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginBottom="24dp"
             android:gravity="center"
-            android:text="No activities yet"
+            android:padding="20dp"
+            android:text="No payments found"
             android:textColor="#757575"
             android:textSize="16sp"
             android:visibility="gone" />

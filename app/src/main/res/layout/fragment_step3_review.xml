@@ -230,17 +230,17 @@
 
         <Button
             android:id="@+id/btnBackStep3"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_gradient_blue"
             android:text="Back"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="#017497"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:backgroundTint="@null"
+            app:strokeColor="#017497"
             app:cornerRadius="8dp" />
 
         <Button

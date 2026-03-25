@@ -2,6 +2,7 @@ package com.example.houseclean.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.TextView
@@ -69,25 +70,24 @@ class LoginEmailVerificationActivity : AppCompatActivity() {
         statusLabel.text = "Status: Checking..."
         
         currentUser.reload().addOnCompleteListener { task ->
-            checkStatusButton.isEnabled = true
             if (task.isSuccessful) {
                 if (currentUser.isEmailVerified) {
-                    Toast.makeText(this, "Email Verified Successfully!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Email Verified Successfully! Please log in again.", Toast.LENGTH_LONG).show()
+                    
                     val uid = currentUser.uid
-                    repository.getUserData(uid).get().addOnSuccessListener { snapshot ->
-                        val role = snapshot.child("role").getValue(String::class.java)
-                        // Update flag in database
-                        repository.updateUserData(uid, mapOf("needsVerification" to false))
-                        navigateToRolePage(role)
-                    }.addOnFailureListener {
-                        // Fallback: If we can't get role, we're still verified
-                        navigateToRolePage("Householder") 
-                    }
+                    // Update flags in database
+                    repository.updateUserData(uid, mapOf("needsVerification" to false))
+                    
+                    // Sign out and navigate to login as requested
+                    repository.logout()
+                    navigateToLogin()
                 } else {
+                    checkStatusButton.isEnabled = true
                     statusLabel.text = "Status: Not yet verified"
                     Toast.makeText(this, "Email not yet verified. Please check your inbox.", Toast.LENGTH_SHORT).show()
                 }
             } else {
+                checkStatusButton.isEnabled = true
                 statusLabel.text = "Status: Error checking verification"
                 Toast.makeText(this, "Failed to refresh status: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
             }
@@ -104,8 +104,10 @@ class LoginEmailVerificationActivity : AppCompatActivity() {
         }
 
         if (newEmail != currentUser.email) {
+            // Update email in Firebase Auth
             currentUser.verifyBeforeUpdateEmail(newEmail).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    // Update email in Realtime Database
                     repository.updateUserData(currentUser.uid, mapOf("email" to newEmail))
                     Toast.makeText(this, "Verification email sent to $newEmail. Please verify to update your email.", Toast.LENGTH_LONG).show()
                     statusLabel.text = "Status: Verification sent to $newEmail"
@@ -129,18 +131,10 @@ class LoginEmailVerificationActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToRolePage(role: String?) {
-        val intent = when (role) {
-            "Householder" -> Intent(this, HouseholderPage::class.java)
-            "Housekeeper" -> Intent(this, HousekeeperPage::class.java)
-            else -> Intent(this, HouseholderPage::class.java) // Default fallback
-        }
-        startActivity(intent)
-        finishAffinity()
-    }
-    
     private fun navigateToLogin() {
-        startActivity(Intent(this, LoginActivity::class.java))
-        finishAffinity()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

@@ -34,7 +34,7 @@ class PaymentFragment : Fragment() {
     private lateinit var tvUpcomingLabel: TextView
     private lateinit var hsvToday: View
     private lateinit var hsvUpcoming: View
-    private var currentTabFilter = "WAITING" // WAITING, PAID, OVERDUE
+    private var currentTabFilter = "WAITING" // WAITING, PAID, OVERDUE, REJECTED
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,7 +77,8 @@ class PaymentFragment : Fragment() {
                 layoutUpcoming.removeAllViews()
                 
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val today = sdf.format(Date())
+                val now = Date()
+                val todayStr = sdf.format(now)
                 var totalCount = 0
                 var todayCount = 0
                 var upcomingCount = 0
@@ -88,11 +89,39 @@ class PaymentFragment : Fragment() {
                     val requestId = child.key ?: ""
                     val finalRequest = request.copy(requestId = requestId)
 
+                    val isPastSchedule = try {
+                        val scheduleDate = if (finalRequest.startDate.contains("T")) {
+                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).parse(finalRequest.startDate)
+                        } else {
+                            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(finalRequest.startDate)
+                        }
+                        scheduleDate != null && now.after(scheduleDate)
+                    } catch (e: Exception) {
+                        false
+                    }
+
+                    val isOverdue = when {
+                        finalRequest.paymentStatus == "OVERDUE" -> true
+                        isPastSchedule && (finalRequest.paymentStatus == "PENDING" || finalRequest.paymentStatus == "RESERVED") -> true
+                        finalRequest.paymentStatus == "PAID" && finalRequest.paidAt > 0 -> {
+                            val scheduleTime = try {
+                                if (finalRequest.startDate.contains("T")) {
+                                    SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault()).parse(finalRequest.startDate)?.time ?: 0L
+                                } else {
+                                    SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(finalRequest.startDate)?.time ?: 0L
+                                }
+                            } catch (e: Exception) { 0L }
+                            finalRequest.paidAt > scheduleTime
+                        }
+                        else -> false
+                    }
+
                     val matchesFilter = when (currentTabFilter) {
-                        "WAITING" -> finalRequest.status == "ACCEPTED" && 
+                        "REJECTED" -> finalRequest.status == "DECLINED"
+                        "OVERDUE" -> finalRequest.status != "DECLINED" && isOverdue
+                        "WAITING" -> finalRequest.status != "DECLINED" && !isOverdue && (finalRequest.status == "PENDING_PAYMENT" || finalRequest.status == "RESERVED" || finalRequest.status == "ACCEPTED") && 
                                     (finalRequest.paymentStatus == "PENDING" || finalRequest.paymentStatus == "RESERVED")
-                        "PAID" -> finalRequest.paymentStatus == "PAID"
-                        "OVERDUE" -> finalRequest.paymentStatus == "OVERDUE"
+                        "PAID" -> finalRequest.status != "DECLINED" && !isOverdue && finalRequest.paymentStatus == "PAID"
                         else -> false
                     }
 
@@ -110,7 +139,7 @@ class PaymentFragment : Fragment() {
                         request.startDate
                     }
                     
-                    if (requestDate == today) {
+                    if (requestDate == todayStr) {
                         addPaymentCard(request, layoutToday)
                         todayCount++
                     } else {
@@ -142,12 +171,24 @@ class PaymentFragment : Fragment() {
         view.findViewById<TextView>(R.id.tvPaymentPrice).text = "PHP ${request.totalPrice.toInt()}"
         
         val statusValue = view.findViewById<TextView>(R.id.tvPaymentStatusValue)
-        statusValue.text = request.paymentStatus
         
-        when(request.paymentStatus) {
-            "PAID" -> statusValue.setTextColor(Color.parseColor("#2DCC91"))
-            "PENDING", "RESERVED" -> statusValue.setTextColor(Color.parseColor("#FFB74D"))
-            "OVERDUE" -> statusValue.setTextColor(Color.parseColor("#E57373"))
+        when (currentTabFilter) {
+            "REJECTED" -> {
+                statusValue.text = "REJECTED"
+                statusValue.setTextColor(Color.parseColor("#E57373"))
+            }
+            "OVERDUE" -> {
+                statusValue.text = "OVERDUE"
+                statusValue.setTextColor(Color.parseColor("#E57373"))
+            }
+            else -> {
+                statusValue.text = if (request.status == "PENDING_PAYMENT") "Awaiting Staff Confirmation" else request.paymentStatus
+                when(request.paymentStatus) {
+                    "PAID" -> statusValue.setTextColor(Color.parseColor("#2DCC91"))
+                    "PENDING", "RESERVED" -> statusValue.setTextColor(Color.parseColor("#FFB74D"))
+                    "OVERDUE" -> statusValue.setTextColor(Color.parseColor("#E57373"))
+                }
+            }
         }
 
         if (request.startDate.contains("T")) {

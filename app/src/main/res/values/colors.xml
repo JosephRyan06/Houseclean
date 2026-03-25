@@ -10,6 +10,13 @@
     <color name="nav_selected_bg">#AFAFAF</color>
     <color name="status_online">#0DFF00</color>
 
+    <!-- Unified Input Field Colors -->
+    <color name="input_highlight">#3FBFF5</color>
+    <color name="input_focus_bg">#DFF5FF</color>
+    <color name="input_default">#424242</color>
+    <color name="input_hint">#888888</color>
+    <color name="input_text">#424242</color>
+
     <!-- Gradients and Shadows -->
     <color name="gradient_start">#2F6BFF</color>
     <color name="gradient_end">#3FBFF5</color>

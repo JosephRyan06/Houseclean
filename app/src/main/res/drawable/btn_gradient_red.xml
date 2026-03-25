@@ -20,7 +20,7 @@
             <gradient
                 android:angle="0"
                 android:endColor="#C03131"
-                android:startColor="#5A1734"
+                android:startColor="#892651"
                 android:type="linear" />
             <corners android:radius="8dp" />
         </shape>

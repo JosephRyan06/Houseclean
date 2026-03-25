@@ -2,8 +2,30 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Houseclean" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <item name="colorPrimary">#3FBFF5</item>
-        <item name="colorControlActivated">#3FBFF5</item>
-        <item name="colorControlHighlight">#3FBFF5</item>
+        <item name="colorPrimary">@color/input_highlight</item>
+        <item name="colorControlActivated">@color/input_highlight</item>
+        <item name="colorControlHighlight">@color/input_highlight</item>
+
+        <!-- Global TextInput Style -->
+        <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.OutlinedBox</item>
+    </style>
+
+    <style name="AppTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/input_stroke_selector</item>
+        <item name="hintTextColor">@color/input_hint_selector</item>
+        <item name="android:textColorHint">@color/input_hint</item>
+        <item name="boxBackgroundColor">@color/input_background_selector</item>
+    </style>
+
+    <style name="AppExposedDropdownMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/input_stroke_selector</item>
+        <item name="hintTextColor">@color/input_hint_selector</item>
+        <item name="android:textColorHint">@color/input_hint</item>
+        <item name="boxBackgroundColor">@color/input_background_selector</item>
+    </style>
+
+    <style name="AppTextInputEditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">@color/input_text</item>
+        <item name="android:textColorHint">@color/input_hint</item>
     </style>
 </resources>
